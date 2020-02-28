@@ -15,19 +15,16 @@ We will be doing a file based memory mapping and hence, provide the file, `testf
 
 # Readings:
 1. mmap:
-mmap can map memory or allocate devices/files to memory.
-Function signature is : `void* mmap(void *addr, size_t len, int prot, int flags, int fd, off_t offset)`.
+`void* mmap(void *addr, size_t len, int prot, int flags, int fd, off_t offset)`.
+
+mmap function is used to map memory, allocate devices/files to memory.
 
 Calling a function with the above arguments, causes all memory pages starting from the address specified by the pointer addr, continuing for up to len bytes, to be mapped from the object described by the object fd. The location of object fd starts from an offset.
 ** If offset or len is not a multiple of the pagesize, the mapped region may extend past the specified range, and any extension is zero filled.
-
-prot specifies the protection schemes used.
-
 Note:
 If MAP_FIXED flag is true, the mapping of the request to location addr is fixed. Thus any previously existing data will be overwritten. If false, the requested memory will be mapped to any available space, starting from addr
 
-
-Page protection schemes:
+Page protection schemes: Specified by the parameter prot
 Following are the protection schemes available:
 a) PROT_NONE := Pages may be accessed.
 b) PROT_READ := Pages may be read.
@@ -42,3 +39,5 @@ a) MAP_ANON: Performs anonymous mapping. Anon mapping is usually done by a progr
 b) MAP_FIXED: This flag specifies whether memory has to be overwritten at the specified address within the mmap function.
 c) MAP_FILE: Default mapping type.
 d) MAP_SHARED: Modifications are shared.(taken from man pages. Will be updated)
+
+mmap returns a pointer to the allocated region in the memory.
