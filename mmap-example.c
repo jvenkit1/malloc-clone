@@ -40,12 +40,19 @@ void anonymous_mapping(){
   size_t pagesize=getpagesize();
   printf("The pagesize is %d\n", pagesize);
 
+  int BUFFER_SIZE=100;
+
   // for anonymous mapping, the value of fd will be -1
-  char* region = mmap((void*)(pagesize*(1<<20)), pagesize, PROT_READ | PROT_WRITE, MAP_ANON|MAP_PRIVATE, -1, 0);
+  char* region = mmap((void*)(pagesize*(1<<20)), BUFFER_SIZE, PROT_READ | PROT_WRITE, MAP_ANON|MAP_PRIVATE, -1, 0);
   assert(region!=MAP_FAILED);
 
   strcpy(region, "The quick brown fox jumps over the fence");
   printf("The contents of the region is: %s\n", region);
+
+  // accessing memory within the region.
+  printf("The content at first location is : %c\n", region[0]);
+  printf("The content at a random location within allocated memory is %d\n", region[50]);
+  printf("The content at a random location outside allocated memory is %d\n", region[250]);
 
   // free memory
   int rc=munmap(region, pagesize);

@@ -45,3 +45,6 @@ mmap returns a pointer to the allocated region in the memory.<br/>
 Note:
 Function mmap2 - <br/> `void *mmap2(void *addr, size_t length, int prot, int flags, int fd, off_t pgoffset);`
  allows ability to map large files(up to 2^44 bytes), since the offset is specified in 4096-byte units, instead of bytes.<br/>
+
+# Observations:
+1. Since mmap first maps address onto a virtual memory, following which it does a copy-on-write to the physical page, any out of bounds reference will yield in a zero value.
